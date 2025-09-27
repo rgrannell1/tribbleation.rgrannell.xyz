@@ -2,12 +2,9 @@
  * Persist and load values across sessions.
  */
 
+import { CODE_KEY, DATA_KEY, INPUT_FORMAT_KEY, OUTPUT_FORMAT_KEY } from "../constants.ts";
 import { InputFormat, OutputFormat } from "../types.ts";
 
-const CODE_KEY = 'tribbleations.code';
-const DATA_KEY = 'tribbleations.data';
-const INPUT_FORMAT_KEY = 'tribbleations.input_format';
-const OUTPUT_FORMAT_KEY = 'tribbleations.output_format'
 
 export class Storage {
   static getCode(): string | null {
@@ -23,7 +20,7 @@ export class Storage {
   }
 
   static getInputFormat(): InputFormat | null {
-    return localStorage.getItem(INPUT_FORMAT_KEY) as InputFormat | null
+    return localStorage.getItem(INPUT_FORMAT_KEY) as InputFormat | null;
   }
 
   static setInputFormat(inputFormat: InputFormat): void {
@@ -35,7 +32,7 @@ export class Storage {
   }
 
   static getOutputFormat(): OutputFormat | null {
-    return localStorage.getItem(OUTPUT_FORMAT_KEY) as OutputFormat | null
+    return localStorage.getItem(OUTPUT_FORMAT_KEY) as OutputFormat | null;
   }
 
   static setOutputFormat(outputFormat: OutputFormat): void {

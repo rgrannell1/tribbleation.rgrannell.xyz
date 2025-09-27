@@ -1,10 +1,8 @@
 import m from "mithril";
-import { State } from "../services/state.ts";
+import { state } from "../services/state.ts";
 
 function ObjectsOutput() {
-  const headers = State.objects.length > 0
-    ? Object.keys(State.objects[0])
-    : [];
+  const headers = State.objects.length > 0 ? Object.keys(State.objects[0]) : [];
   const rows = State.objects.map((obj: any) =>
     headers.map((header) => obj[header] ?? "")
   );
@@ -31,12 +29,17 @@ function RowsOutput() {
 
 export const Output = {
   view() {
-    if (State.outputFormat === 'rows') {
+
+    return m("div.output", [
+      m("h2", `Output`)
+    ]);
+
+    if (State.outputFormat === "rows") {
       return RowsOutput();
-    } else if (State.outputFormat === 'objects') {
+    } else if (State.outputFormat === "objects") {
       return ObjectsOutput();
     } else {
-      return m('p', 'unsupported output format');
+      return m("p", "unsupported output format");
     }
   },
 };

@@ -1,8 +1,9 @@
 import m from "mithril";
 
 import { Header } from "./components/Header.ts";
-import { Editor } from "./components/Editor.ts";
+import { attachCodeMirror, Editor } from "./components/Editor.ts";
 import { Output } from "./components/Output.ts";
+import { listen, onCodeEdit } from "./services/events.ts";
 
 const App = {
   view() {
@@ -15,3 +16,9 @@ const App = {
 };
 
 m.mount(document.body, App);
+
+attachCodeMirror();
+
+/* ~~~~~ State Handling ~~~~~ */
+
+listen("code_updated", onCodeEdit);

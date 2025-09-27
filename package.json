@@ -9,6 +9,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.4",
+    "@codemirror/view": "^6.38.3",
+    "codemirror": "^6.0.2",
     "mithril": "^2.3.7",
     "monaco-editor": "^0.53.0",
     "ts-pattern": "^5.8.0"

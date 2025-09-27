@@ -4,6 +4,6 @@
  * For the moment, just `state` definitions
  */
 
-import { loadState } from "./state2.ts";
+import { loadState } from "./state.ts";
 
 export const state = loadState();

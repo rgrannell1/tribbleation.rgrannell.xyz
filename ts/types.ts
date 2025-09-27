@@ -1,69 +1,66 @@
-import { TribbleParser } from "../library/tribble"
+export type OutputFormat = "rows" | "objects";
 
-export type OutputFormat = (
-  'rows' | 'objects'
-)
-
-export type InputFormat = (
-  'tribbles' | 'triples'
-)
+export type InputFormat = "tribbles" | "triples";
 
 export type InputData = {
-  format: InputFormat,
-  text: string
-}
+  format: InputFormat;
+  text: string;
+};
 
 export type ObjectResults = {
-  format: 'objects',
-  data: Record<string, any>[]
-}
+  format: "objects";
+  data: Record<string, any>[];
+};
 
 export type TriplesResults = {
-  format: 'rows',
-  data: any[]
-}
+  format: "rows";
+  data: any[];
+};
 
 export type Results =
-  ObjectResults |
-  TriplesResults
-
+  | ObjectResults
+  | TriplesResults;
 
 export type CodeState =
-  OkCodeState |
-  FailedCodeState
+  | OkCodeState
+  | FailedCodeState;
 
 export type OkCodeState = {
-  state: 'ok';
+  state: "ok";
   text: string;
-}
+};
 
 export type FailedCodeState = {
-  state: 'failed';
+  state: "failed";
   text: string;
   error: string;
-}
+};
 
 export type State = {
-  code: CodeState,
+  code: CodeState;
   settings: {
-    outputFormat: OutputFormat
-  },
-  input?: InputData,
-  results?: Results
-}
+    outputFormat: OutputFormat;
+  };
+  input?: InputData;
+  results?: Results;
+};
+
+/* ~~~~~~~~~~~~~~ */
+
+export type ApplicationEvents = "code_updated";
 
 /* ~~~~~~~~~~~~~~ */
 
 export type OkParseResult = {
-  state: 'ok',
-  data: any[]
-}
+  state: "ok";
+  data: any[];
+};
 
 export type FailedParseResult = {
-  state: 'failed',
-  error: string
-}
+  state: "failed";
+  error: string;
+};
 
 export type InputParseResult =
-  OkParseResult |
-  FailedParseResult
+  | OkParseResult
+  | FailedParseResult;
