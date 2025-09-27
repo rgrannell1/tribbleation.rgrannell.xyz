@@ -7,9 +7,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "mithril": "^2.3.7",
-    "monaco-editor": "^0.53.0"
-  }
+    "monaco-editor": "^0.53.0",
+    "ts-pattern": "^5.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rgrannell1/tribbleation.rgrannell.xyz.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rgrannell1/tribbleation.rgrannell.xyz/issues"
+  },
+  "homepage": "https://github.com/rgrannell1/tribbleation.rgrannell.xyz#readme"
 }

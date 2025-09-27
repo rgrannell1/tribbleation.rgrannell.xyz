@@ -1,7 +1,7 @@
 export const DEFAULT_CODE = `
-const tdb = new TribbleDB($content).search({
 
+return new TribbleDB($content).search({
+  relation: 'name'
 });
 
-return tdb;
 `;
