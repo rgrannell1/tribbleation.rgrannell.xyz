@@ -9,8 +9,28 @@ import { state } from "./config.ts";
 import { parseCode, parseTribbles, parseTriples } from "./services/parsers.ts";
 import { broadcast } from "./commons/events.ts";
 import { readFile } from "./commons/files.ts";
-import { AppEvents, DEFAULT_OUTPUT_FORMAT } from "./constants.ts";
+import { AppEvents, DEFAULT_INPUT_FORMAT, DEFAULT_OUTPUT_FORMAT } from "./constants.ts";
 import { evaluateCode } from "./services/evaluator.ts";
+
+function rerunCode() {
+  if (state.triples?.state !== "ok" || state.code.state !== "ok") {
+    return;
+  }
+
+  const evalResult = evaluateCode(state.triples.data, state.code.text);
+  if (evalResult.state === "failed") {
+    state.code = {
+      state: "failed",
+      text: state.code.text,
+      error: evalResult.error,
+    };
+
+    m.redraw();
+    return;
+  }
+
+  broadcast(AppEvents.TRIPLESTORE_UPDATED, { tdb: evalResult.tdb });
+}
 
 /*
  * ~~~~ Event Handlers ~~~~~
@@ -34,24 +54,8 @@ export function onCodeEdit(event: Event) {
 /*
  * Handle new parsable code being added
  */
-export function onValidCodeAdded() {
-  if (state.triples?.state !== "ok" || state.code.state !== "ok") {
-    return;
-  }
-
-  const evalResult = evaluateCode(state.triples.data, state.code.text);
-  if (evalResult.state === "failed") {
-    state.code = {
-      state: "failed",
-      text: state.code.text,
-      error: evalResult.error,
-    };
-
-    m.redraw();
-    return;
-  }
-
-  broadcast(AppEvents.TRIPLESTORE_UPDATED, { tdb: evalResult.tdb });
+export function onValidCodeAdded(_event: Event) {
+  rerunCode();
 }
 
 /*
@@ -61,7 +65,7 @@ export function onValidCodeAdded() {
 export async function onFileChange(event: Event) {
   const detail = (event as CustomEvent).detail satisfies { files: File[] };
 
-  Storage.setInputFormat("tribbles");
+  Storage.setInputFormat(DEFAULT_INPUT_FORMAT);
 
   if (detail.files.length !== 1) {
     state.input = {
@@ -91,7 +95,7 @@ export async function onFileChange(event: Event) {
  * Run when triples are reloaded
  */
 export function onTriplesUpdated(_: Event) {
-  onValidCodeAdded();
+  rerunCode();
 }
 
 /*
@@ -124,5 +128,5 @@ export function onOutputFormatChanged(event: Event) {
   const { format } = (event as CustomEvent).detail satisfies { format: string };
   Storage.setOutputFormat(format);
 
-  onValidCodeAdded();
+  rerunCode();
 }

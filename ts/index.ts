@@ -4,6 +4,8 @@ import { header } from "./components/header.ts";
 import { attachCodeMirror, editor } from "./components/editor.ts";
 import { output } from "./components/output.ts";
 import { listen } from "./commons/events.ts";
+import { AppEvents } from "./constants.ts";
+import { settings } from "./components/settings.ts";
 import {
   onCodeEdit,
   onFileChange,
@@ -12,9 +14,10 @@ import {
   onTriplesUpdated,
   onValidCodeAdded,
 } from "./actions.ts";
-import { AppEvents } from "./constants.ts";
-import { settings } from "./components/settings.ts";
 
+/*
+ * Root component
+ */
 const App = {
   view() {
     return m("div.grid", [
@@ -30,7 +33,12 @@ m.mount(document.body, App);
 
 attachCodeMirror();
 
-/* ~~~~~ State Handling ~~~~~ */
+/* ~~~~~ State Handling ~~~~~
+ *
+ * Events are emitted when users interact with the page,
+ * and handles respond to these events by updating the state.
+ * Some handlers also emit events.
+ */
 
 listen(AppEvents.CODE_UPDATED, onCodeEdit);
 listen(AppEvents.VALID_CODE_ADDED, onValidCodeAdded);
