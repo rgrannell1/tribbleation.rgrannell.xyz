@@ -7,16 +7,19 @@ import { listen } from "./services/events.ts";
 import {
   onCodeEdit,
   onFileChange,
+  onOutputFormatChanged,
   onTripleStoreUpdated,
   onTriplesUpdated,
   onValidCodeAdded,
 } from "./actions.ts";
 import { AppEvents } from "./constants.ts";
+import { Settings } from "./components/Settings.ts";
 
 const App = {
   view() {
     return m("div.grid", [
       m(Header),
+      m(Settings),
       m(Editor),
       m(Output),
     ]);
@@ -34,3 +37,4 @@ listen(AppEvents.VALID_CODE_ADDED, onValidCodeAdded);
 listen(AppEvents.FILE_CHANGED, onFileChange);
 listen(AppEvents.TRIPLES_UPDATED, onTriplesUpdated);
 listen(AppEvents.TRIPLESTORE_UPDATED, onTripleStoreUpdated);
+listen(AppEvents.OUTPUT_FORMAT_CHANGED, onOutputFormatChanged);

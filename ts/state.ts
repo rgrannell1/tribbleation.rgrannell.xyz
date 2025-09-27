@@ -11,7 +11,7 @@ export function loadState(): State {
   const inputData = Storage.getData();
 
   const input: InputState | undefined = inputFormat && inputData
-    ? { state: 'ok', data: inputData, format: inputFormat }
+    ? { state: "ok", data: inputData, format: inputFormat }
     : undefined;
 
   const code = parseCode(Storage.getCode() ?? DEFAULT_CODE);
@@ -23,6 +23,6 @@ export function loadState(): State {
   return {
     code,
     settings,
-    input
+    input,
   };
 }

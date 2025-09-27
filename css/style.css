@@ -23,8 +23,12 @@ header {
   font-family: monospace;
 }
 
-.output {
+.settings {
   grid-row: 3;
+}
+
+.output {
+  grid-row: 4;
   grid-column: 1 / span 3;
 }
 

@@ -1,5 +1,10 @@
 import { TribbleDB, TribbleParser } from "../../library/tribble.js";
-import { CodeState, FailedInputState, InputParseResult, TriplesState } from "../types.ts";
+import {
+  CodeState,
+  FailedInputState,
+  InputParseResult,
+  TriplesState,
+} from "../types.ts";
 
 /*
  * Check that the code parses as JavaScript.

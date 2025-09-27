@@ -1,11 +1,9 @@
-
 import { TribbleDB } from "../../library/tribble.js";
 import { EvaluateState } from "../types.js";
 
 /*
  * Evaluate against user-provided inputs.
  */
-
 
 /*
  * Evaluate user-provided code in the context of the loaded triples
@@ -16,14 +14,14 @@ export function evaluateCode(tdb: any, code: string): EvaluateState {
 
     if (!(res instanceof TribbleDB)) {
       return {
-        state: 'failed',
-        error: 'Code did not return a TribbleDB object',
-      }
+        state: "failed",
+        error: "Code did not return a TribbleDB object",
+      };
     }
 
     return {
       state: "ok",
-      tdb: res
+      tdb: res,
     };
   } catch (err) {
     return {

@@ -34,7 +34,10 @@ function RowsOutput(results: TriplesResults) {
 export const Output = {
   view() {
     if (!state.results) {
-      return m("p", "No results to display");
+      return m("div.output", [
+        m("h3", "Output"),
+        m("p", "No results to display"),
+      ]);
     }
 
     if (state.results.format === "rows") {

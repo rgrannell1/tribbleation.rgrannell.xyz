@@ -21,4 +21,5 @@ export class AppEvents {
   static FILE_CHANGED: ApplicationEvents = "file_changed";
   static TRIPLES_UPDATED: ApplicationEvents = "triples_updated";
   static TRIPLESTORE_UPDATED: ApplicationEvents = "triplestore_updated";
+  static OUTPUT_FORMAT_CHANGED: ApplicationEvents = "output_format_changed";
 }

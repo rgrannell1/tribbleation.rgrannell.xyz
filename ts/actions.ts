@@ -31,17 +31,17 @@ export function onCodeEdit(event: Event) {
  * Handle new parsable code being added
  */
 export function onValidCodeAdded(event: Event) {
-  if (state.triples?.state !== 'ok' || state.code.state !== 'ok') {
+  if (state.triples?.state !== "ok" || state.code.state !== "ok") {
     return;
   }
 
   const evalResult = evaluateCode(state.triples.data, state.code.text);
-  if (evalResult.state === 'failed') {
+  if (evalResult.state === "failed") {
     state.code = {
-      state: 'failed',
+      state: "failed",
       text: state.code.text,
       error: evalResult.error,
-    }
+    };
 
     m.redraw();
     return;
@@ -63,7 +63,7 @@ export async function onFileChange(event: Event) {
       state: "failed",
       format: Storage.getInputFormat() as any,
       error: "Please select a single file",
-    }
+    };
   }
 
   const [file] = detail.files;
@@ -74,30 +74,29 @@ export async function onFileChange(event: Event) {
   if (state.settings.inputFormat === "tribbles") {
     state.triples = parseTribbles(content);
   } else if (state.settings.inputFormat === "triples") {
-    state.triples = parseTriples(content)
+    state.triples = parseTriples(content);
   } else {
     throw new Error("Unknown input format");
   }
 
-  broadcast(AppEvents.TRIPLES_UPDATED, {})
+  broadcast(AppEvents.TRIPLES_UPDATED, {});
 }
 
 /*
  * Run when triples are reloaded
- *
  */
 export async function onTriplesUpdated(event: Event) {
-  if (state.triples?.state !== 'ok' || state.code.state !== 'ok') {
+  if (state.triples?.state !== "ok" || state.code.state !== "ok") {
     return;
   }
 
   const evalResult = evaluateCode(state.triples.data, state.code.text);
-  if (evalResult.state === 'failed') {
+  if (evalResult.state === "failed") {
     state.code = {
-      state: 'failed',
+      state: "failed",
       text: state.code.text,
       error: evalResult.error,
-    }
+    };
 
     m.redraw();
     return;
@@ -108,23 +107,45 @@ export async function onTriplesUpdated(event: Event) {
 
 /*
  * The triplestore is updated, so update results.
- *
  */
 export function onTripleStoreUpdated(event: Event) {
   const { tdb } = (event as CustomEvent).detail satisfies { tdb: any };
 
-  const outputFormat = Storage.getOutputFormat() ?? 'rows';
-  if (outputFormat === 'rows') {
+  const outputFormat = Storage.getOutputFormat() ?? "rows";
+  if (outputFormat === "rows") {
     state.results = {
-      format: 'rows',
-      data: tdb.triples()
-    }
-  } else if (outputFormat === 'objects') {
+      format: "rows",
+      data: tdb.triples(),
+    };
+  } else if (outputFormat === "objects") {
     state.results = {
-      format: 'objects',
-      data: tdb.objects()
-    }
+      format: "objects",
+      data: tdb.objects(),
+    };
   }
 
   m.redraw();
+}
+
+export function onOutputFormatChanged(event: Event) {
+  const { format } = (event as CustomEvent).detail satisfies { format: string };
+  Storage.setOutputFormat(format);
+
+  if (state.triples?.state !== "ok" || state.code.state !== "ok") {
+    return;
+  }
+
+  const evalResult = evaluateCode(state.triples.data, state.code.text);
+  if (evalResult.state === "failed") {
+    state.code = {
+      state: "failed",
+      text: state.code.text,
+      error: evalResult.error,
+    };
+
+    m.redraw();
+    return;
+  }
+
+  broadcast(AppEvents.TRIPLESTORE_UPDATED, { tdb: evalResult.tdb });
 }

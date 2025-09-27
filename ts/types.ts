@@ -1,4 +1,3 @@
-
 export type InputFormat = "tribbles" | "triples";
 export type OutputFormat = "rows" | "objects";
 
@@ -9,7 +8,8 @@ export type ApplicationEvents =
   | "valid_code_added"
   | "file_changed"
   | "triples_updated"
-  | "triplestore_updated";
+  | "triplestore_updated"
+  | "output_format_changed";
 
 /* ~~~~~~~~~~~~~~ */
 
@@ -64,14 +64,13 @@ export type FailedCodeState = {
 export type State = {
   code: CodeState;
   settings: {
-    inputFormat: InputFormat
+    inputFormat: InputFormat;
     outputFormat: OutputFormat;
   };
   input?: InputState;
   triples?: TriplesState;
   results?: Results;
 };
-
 
 /* ~~~~~~ Code Evaluation ~~~~~~~~ */
 
@@ -101,4 +100,4 @@ export type FailedTriplesState = {
   state: "failed";
   format: InputFormat;
   error: string;
-}
+};
