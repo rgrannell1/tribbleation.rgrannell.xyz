@@ -1,15 +1,17 @@
 import m from "mithril";
-import { state } from "../state.ts";
+import { state } from "../config.ts";
+import { ObjectResults, TriplesResults } from "../types.ts";
 
-function ObjectsOutput() {
-  const headers = State.objects.length > 0 ? Object.keys(State.objects[0]) : [];
-  const rows = State.objects.map((obj: any) =>
+function ObjectsOutput(results: ObjectResults) {
+  const data = results.data;
+  const headers = data.length > 0 ? Object.keys(data[0]) : [];
+  const rows = data.map((obj: any) =>
     headers.map((header) => obj[header] ?? "")
   );
 
-  if (State.objects.length > 0) {
+  if (data.length > 0) {
     return m("div.output", [
-      m("h3", `Output ${State.objects.length} rows`),
+      m("h3", `Output ${data.length} rows`),
       m("table", [
         m("tr", headers.map((header) => m("th", header))),
         ...rows.map((row) => m("tr", row.map((cell) => m("td", cell)))),
@@ -18,25 +20,27 @@ function ObjectsOutput() {
   }
 }
 
-function RowsOutput() {
+function RowsOutput(results: TriplesResults) {
+  const data = results.data;
+
   return m("div.output", [
-    m("h3", `Output ${State.results.length} rows`),
+    m("h3", `Output ${data.length} rows`),
     m("table", [
-      ...State.results.map((row) => m("tr", row.map((cell) => m("td", cell)))),
+      data.map((row) => m("tr", row.map((cell: any) => m("td", cell)))),
     ]),
   ]);
 }
 
 export const Output = {
   view() {
-    return m("div.output", [
-      m("h2", `Output`),
-    ]);
+    if (!state.results) {
+      return m("p", "No results to display");
+    }
 
-    if (State.outputFormat === "rows") {
-      return RowsOutput();
-    } else if (State.outputFormat === "objects") {
-      return ObjectsOutput();
+    if (state.results.format === "rows") {
+      return RowsOutput(state.results satisfies TriplesResults);
+    } else if (state.results.format === "objects") {
+      return ObjectsOutput(state.results satisfies ObjectResults);
     } else {
       return m("p", "unsupported output format");
     }

@@ -11,7 +11,6 @@ import { broadcast } from "./services/events.ts";
 import { readFile } from "./services/files.ts";
 import { AppEvents } from "./constants.ts";
 import { evaluateCode } from "./services/evaluator.ts";
-import { TribbleDB } from "../library/tribble.js";
 
 /*
  * Handle code-edits
@@ -107,8 +106,25 @@ export async function onTriplesUpdated(event: Event) {
   broadcast(AppEvents.TRIPLESTORE_UPDATED, { tdb: evalResult.tdb });
 }
 
+/*
+ * The triplestore is updated, so update results.
+ *
+ */
 export function onTripleStoreUpdated(event: Event) {
-  const detail = (event as CustomEvent).detail satisfies { tdb: any };
-  const tdb = detail.tdb;
+  const { tdb } = (event as CustomEvent).detail satisfies { tdb: any };
 
+  const outputFormat = Storage.getOutputFormat() ?? 'rows';
+  if (outputFormat === 'rows') {
+    state.results = {
+      format: 'rows',
+      data: tdb.triples()
+    }
+  } else if (outputFormat === 'objects') {
+    state.results = {
+      format: 'objects',
+      data: tdb.objects()
+    }
+  }
+
+  m.redraw();
 }

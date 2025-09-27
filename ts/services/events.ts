@@ -12,6 +12,8 @@ export function broadcast(
   label: ApplicationEvents,
   detail: CustomEvent["detail"],
 ) {
+  console.info(`broadcasting event: ${label}`, detail);
+
   document.dispatchEvent(
     new CustomEvent(label, {
       detail,
