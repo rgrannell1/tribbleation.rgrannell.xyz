@@ -1,9 +1,9 @@
 import m from "mithril";
-import { state } from "../services/config.ts";
+import { state } from "../config.ts";
 import { basicSetup, EditorView } from "codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { broadcast } from "../services/events.ts";
-import { QUERY_DOCUMENTATION } from "../constants.ts";
+import { AppEvents, QUERY_DOCUMENTATION } from "../constants.ts";
 
 export const ErrorDetails = {
   view() {
@@ -28,7 +28,7 @@ export const Editor = {
 
 /*
  * I have no idea how to bind this component through Mithril, so
- * attatch it through direct DOM manipulation
+ * attatch it through direct DOM manipulation for the moment
  */
 export function attachCodeMirror() {
   const $editor = document.querySelector("div.editor");
@@ -44,7 +44,7 @@ export function attachCodeMirror() {
 
   $editor.addEventListener("keyup", (event: Event) => {
     if (event.target) {
-      broadcast("code_updated", {
+      broadcast(AppEvents.CODE_UPDATED, {
         code: (event.target as HTMLElement).innerText,
       });
     }

@@ -1,3 +1,5 @@
+import { ApplicationEvents } from "./types";
+
 export const DEFAULT_CODE = `
 return $tdb.search({
   relation: 'name'
@@ -12,3 +14,9 @@ export const CODE_KEY = "tribbleations.code";
 export const DATA_KEY = "tribbleations.data";
 export const INPUT_FORMAT_KEY = "tribbleations.input_format";
 export const OUTPUT_FORMAT_KEY = "tribbleations.output_format";
+
+export class AppEvents {
+  static CODE_UPDATED: ApplicationEvents = "code_updated";
+  static VALID_CODE_ADDED: ApplicationEvents = "valid_code_added";
+  static FILE_CHANGED: ApplicationEvents = "file_changed";
+}

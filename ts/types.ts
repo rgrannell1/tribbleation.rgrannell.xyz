@@ -47,7 +47,10 @@ export type State = {
 
 /* ~~~~~~~~~~~~~~ */
 
-export type ApplicationEvents = "code_updated";
+export type ApplicationEvents =
+  | "code_updated"
+  | "valid_code_added"
+  | "file_changed";
 
 /* ~~~~~~~~~~~~~~ */
 

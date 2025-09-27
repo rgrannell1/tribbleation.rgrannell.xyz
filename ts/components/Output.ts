@@ -29,9 +29,8 @@ function RowsOutput() {
 
 export const Output = {
   view() {
-
     return m("div.output", [
-      m("h2", `Output`)
+      m("h2", `Output`),
     ]);
 
     if (State.outputFormat === "rows") {

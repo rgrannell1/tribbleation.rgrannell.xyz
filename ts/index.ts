@@ -3,7 +3,13 @@ import m from "mithril";
 import { Header } from "./components/Header.ts";
 import { attachCodeMirror, Editor } from "./components/Editor.ts";
 import { Output } from "./components/Output.ts";
-import { listen, onCodeEdit } from "./services/events.ts";
+import { listen } from "./services/events.ts";
+import {
+  onCodeEdit,
+  onFileChange,
+  onValidCodeAdded,
+} from "./services/actions.ts";
+import { AppEvents } from "./constants.ts";
 
 const App = {
   view() {
@@ -21,4 +27,6 @@ attachCodeMirror();
 
 /* ~~~~~ State Handling ~~~~~ */
 
-listen("code_updated", onCodeEdit);
+listen(AppEvents.CODE_UPDATED, onCodeEdit);
+listen(AppEvents.VALID_CODE_ADDED, onValidCodeAdded);
+listen(AppEvents.FILE_CHANGED, onFileChange);

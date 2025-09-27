@@ -2,9 +2,13 @@
  * Persist and load values across sessions.
  */
 
-import { CODE_KEY, DATA_KEY, INPUT_FORMAT_KEY, OUTPUT_FORMAT_KEY } from "../constants.ts";
+import {
+  CODE_KEY,
+  DATA_KEY,
+  INPUT_FORMAT_KEY,
+  OUTPUT_FORMAT_KEY,
+} from "../constants.ts";
 import { InputFormat, OutputFormat } from "../types.ts";
-
 
 export class Storage {
   static getCode(): string | null {
