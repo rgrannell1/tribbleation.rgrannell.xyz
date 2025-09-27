@@ -23,6 +23,7 @@ export function broadcast(
 
 /*
  * Listen for custom application events.
+ *
  */
 export function listen(
   label: ApplicationEvents,

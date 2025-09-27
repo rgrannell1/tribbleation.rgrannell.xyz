@@ -1,6 +1,17 @@
-export type OutputFormat = "rows" | "objects";
 
 export type InputFormat = "tribbles" | "triples";
+export type OutputFormat = "rows" | "objects";
+
+/* ~~~~~~~~~~~~~~ */
+
+export type ApplicationEvents =
+  | "code_updated"
+  | "valid_code_added"
+  | "file_changed"
+  | "triples_updated"
+  | "triplestore_updated";
+
+/* ~~~~~~~~~~~~~~ */
 
 export type InputData = {
   format: InputFormat;
@@ -61,14 +72,6 @@ export type State = {
   results?: Results;
 };
 
-/* ~~~~~~~~~~~~~~ */
-
-export type ApplicationEvents =
-  | "code_updated"
-  | "valid_code_added"
-  | "file_changed"
-  | "triples_updated"
-  | "triplestore_updated";
 
 /* ~~~~~~ Code Evaluation ~~~~~~~~ */
 
