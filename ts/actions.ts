@@ -13,7 +13,7 @@ import { AppEvents, DEFAULT_INPUT_FORMAT, DEFAULT_OUTPUT_FORMAT } from "./consta
 import { evaluateCode } from "./services/evaluator.ts";
 import { TribbleDB } from "tribbledb";
 
-function rerunCode() {
+function rerunCode(): void {
   if (state.triples?.state !== "ok" || state.code.state !== "ok") {
     return;
   }
@@ -40,7 +40,7 @@ function rerunCode() {
 /*
  * Handle code-edits
  */
-export function onCodeEdit(event: Event) {
+export function onCodeEdit(event: Event): void {
   const detail = (event as CustomEvent).detail satisfies { code: string };
 
   Storage.setCode(detail.code);
@@ -55,7 +55,7 @@ export function onCodeEdit(event: Event) {
 /*
  * Handle new parsable code being added
  */
-export function onValidCodeAdded(_event: Event) {
+export function onValidCodeAdded(_event: Event): void {
   rerunCode();
 }
 
@@ -63,7 +63,7 @@ export function onValidCodeAdded(_event: Event) {
  * Handle triple / tribble files being added
  *
  */
-export async function onFileChange(event: Event) {
+export async function onFileChange(event: Event): Promise<void> {
   const detail = (event as CustomEvent).detail satisfies { files: File[] };
 
   Storage.setInputFormat(DEFAULT_INPUT_FORMAT);
@@ -95,14 +95,14 @@ export async function onFileChange(event: Event) {
 /*
  * Run when triples are reloaded
  */
-export function onTriplesUpdated(_: Event) {
+export function onTriplesUpdated(_: Event): void {
   rerunCode();
 }
 
 /*
  * The triplestore is updated, so update results.
  */
-export function onTripleStoreUpdated(event: Event) {
+export function onTripleStoreUpdated(event: Event): void {
   const { tdb } = (event as CustomEvent).detail satisfies { tdb: TribbleDB };
 
   const outputFormat = Storage.getOutputFormat() ?? DEFAULT_OUTPUT_FORMAT;
@@ -125,7 +125,7 @@ export function onTripleStoreUpdated(event: Event) {
  * Handle output-format changes
  *
  */
-export function onOutputFormatChanged(event: Event) {
+export function onOutputFormatChanged(event: Event): void {
   const { format } = (event as CustomEvent).detail satisfies { format: string };
   Storage.setOutputFormat(format);
 
