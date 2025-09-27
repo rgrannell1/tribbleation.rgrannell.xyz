@@ -1,3 +1,6 @@
+
+import { TribbleDB } from "tribbledb";
+
 export type InputFormat = "tribbles" | "triples";
 export type OutputFormat = "rows" | "objects";
 
@@ -78,7 +81,7 @@ export type EvaluateState = OkEvaluateState | FailedEvaluateState;
 
 export type OkEvaluateState = {
   state: "ok";
-  tdb: any; // TribbleDB
+  tdb: TribbleDB;
 };
 
 export type FailedEvaluateState = {
@@ -93,7 +96,7 @@ export type TriplesState = OkTriplesState | FailedTriplesState;
 export type OkTriplesState = {
   state: "ok";
   format: InputFormat;
-  data: any; // TribbleDB
+  data: TribbleDB;
 };
 
 export type FailedTriplesState = {

@@ -1,8 +1,6 @@
-import { TribbleDB, TribbleParser } from "../../library/tribble.js";
+import { TribbleDB, TribbleParser } from "tribbledb";
 import {
   CodeState,
-  FailedInputState,
-  InputParseResult,
   TriplesState,
 } from "../types.ts";
 
@@ -68,9 +66,10 @@ export function parseTribbles(content: string): TriplesState {
 }
 
 export function parseTriples(triples: string): TriplesState {
+  let parsed: unknown = undefined;
   try {
-    var parsed = JSON.parse(triples);
-  } catch (err) {
+    parsed = JSON.parse(triples);
+  } catch (_err) {
     return {
       state: "failed",
       format: "triples",

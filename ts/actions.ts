@@ -56,6 +56,7 @@ export function onValidCodeAdded() {
 
 /*
  * Handle triple / tribble files being added
+ *
  */
 export async function onFileChange(event: Event) {
   const detail = (event as CustomEvent).detail satisfies { files: File[] };
@@ -89,7 +90,7 @@ export async function onFileChange(event: Event) {
 /*
  * Run when triples are reloaded
  */
-export async function onTriplesUpdated(event: Event) {
+export function onTriplesUpdated(_: Event) {
   onValidCodeAdded();
 }
 
@@ -115,6 +116,10 @@ export function onTripleStoreUpdated(event: Event) {
   m.redraw();
 }
 
+/*
+ * Handle output-format changes
+ *
+ */
 export function onOutputFormatChanged(event: Event) {
   const { format } = (event as CustomEvent).detail satisfies { format: string };
   Storage.setOutputFormat(format);

@@ -1,4 +1,4 @@
-import { TribbleDB } from "../../library/tribble.js";
+import { TribbleDB } from "tribbledb";
 import { EvaluateState } from "../types.js";
 
 /*
@@ -8,7 +8,7 @@ import { EvaluateState } from "../types.js";
 /*
  * Evaluate user-provided code in the context of the loaded triples
  */
-export function evaluateCode(tdb: any, code: string): EvaluateState {
+export function evaluateCode(tdb: TribbleDB, code: string): EvaluateState {
   try {
     const res = new Function("$tdb", code)(tdb);
 
