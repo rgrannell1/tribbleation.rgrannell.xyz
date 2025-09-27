@@ -11,6 +11,7 @@ import { broadcast } from "./commons/events.ts";
 import { readFile } from "./commons/files.ts";
 import { AppEvents, DEFAULT_INPUT_FORMAT, DEFAULT_OUTPUT_FORMAT } from "./constants.ts";
 import { evaluateCode } from "./services/evaluator.ts";
+import { TribbleDB } from "tribbledb";
 
 function rerunCode() {
   if (state.triples?.state !== "ok" || state.code.state !== "ok") {
@@ -102,7 +103,7 @@ export function onTriplesUpdated(_: Event) {
  * The triplestore is updated, so update results.
  */
 export function onTripleStoreUpdated(event: Event) {
-  const { tdb } = (event as CustomEvent).detail satisfies { tdb: any };
+  const { tdb } = (event as CustomEvent).detail satisfies { tdb: TribbleDB };
 
   const outputFormat = Storage.getOutputFormat() ?? DEFAULT_OUTPUT_FORMAT;
   if (outputFormat === "rows") {
