@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/rgrannell1/tribbleation.rgrannell.xyz/issues"
   },
-  "homepage": "https://github.com/rgrannell1/tribbleation.rgrannell.xyz#readme"
+  "homepage": "https://github.com/rgrannell1/tribbleation.rgrannell.xyz#readme",
+  "devDependencies": {
+    "@types/mithril": "^2.2.7"
+  }
 }

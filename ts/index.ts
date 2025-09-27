@@ -7,8 +7,10 @@ import { listen } from "./services/events.ts";
 import {
   onCodeEdit,
   onFileChange,
+  onTripleStoreUpdated,
+  onTriplesUpdated,
   onValidCodeAdded,
-} from "./services/actions.ts";
+} from "./actions.ts";
 import { AppEvents } from "./constants.ts";
 
 const App = {
@@ -30,3 +32,5 @@ attachCodeMirror();
 listen(AppEvents.CODE_UPDATED, onCodeEdit);
 listen(AppEvents.VALID_CODE_ADDED, onValidCodeAdded);
 listen(AppEvents.FILE_CHANGED, onFileChange);
+listen(AppEvents.TRIPLES_UPDATED, onTriplesUpdated);
+listen(AppEvents.TRIPLESTORE_UPDATED, onTripleStoreUpdated);

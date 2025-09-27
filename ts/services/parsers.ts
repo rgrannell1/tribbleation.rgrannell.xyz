@@ -1,6 +1,12 @@
-import { TribbleParser } from "../../library/tribble.js";
-import { CodeState, InputParseResult } from "../types.ts";
+import { TribbleDB, TribbleParser } from "../../library/tribble.js";
+import { CodeState, FailedInputState, InputParseResult, TriplesState } from "../types.ts";
 
+/*
+ * Check that the code parses as JavaScript.
+ *
+ * @param code The code to parse.
+ * @return The result of the parse.
+ */
 export function parseCode(code: string): CodeState {
   try {
     new Function(code);
@@ -18,10 +24,11 @@ export function parseCode(code: string): CodeState {
   };
 }
 
-export function parseTribbles(content: string): InputParseResult {
+export function parseTribbles(content: string): TriplesState {
   if (!content) {
     return {
       state: "failed",
+      format: "tribbles",
       error: "Empty tribbles file",
     };
   }
@@ -43,22 +50,25 @@ export function parseTribbles(content: string): InputParseResult {
   } catch (err) {
     return {
       state: "failed",
+      format: "tribbles",
       error: (err as Error).message,
     };
   }
 
   return {
     state: "ok",
-    data: rows,
+    format: "tribbles",
+    data: new TribbleDB(rows),
   };
 }
 
-export function parseTriples(triples: string): InputParseResult {
+export function parseTriples(triples: string): TriplesState {
   try {
     var parsed = JSON.parse(triples);
   } catch (err) {
     return {
       state: "failed",
+      format: "triples",
       error: "Could not parse triples file as JSON",
     };
   }
@@ -66,6 +76,7 @@ export function parseTriples(triples: string): InputParseResult {
   if (!Array.isArray(parsed)) {
     return {
       state: "failed",
+      format: "triples",
       error: "Triples file must be an array",
     };
   }
@@ -75,6 +86,7 @@ export function parseTriples(triples: string): InputParseResult {
     if (!Array.isArray(elem)) {
       return {
         state: "failed",
+        format: "triples",
         error: "All entries in a triple-file must be an array",
       };
     }
@@ -86,6 +98,7 @@ export function parseTriples(triples: string): InputParseResult {
     if (elem.length !== size) {
       return {
         state: "failed",
+        format: "triples",
         error: "All rows in the triple file should have the same length",
       };
     }
@@ -93,6 +106,7 @@ export function parseTriples(triples: string): InputParseResult {
 
   return {
     state: "ok",
-    data: parsed,
+    format: "triples",
+    data: new TribbleDB(parsed),
   };
 }

@@ -19,4 +19,6 @@ export class AppEvents {
   static CODE_UPDATED: ApplicationEvents = "code_updated";
   static VALID_CODE_ADDED: ApplicationEvents = "valid_code_added";
   static FILE_CHANGED: ApplicationEvents = "file_changed";
+  static TRIPLES_UPDATED: ApplicationEvents = "triples_updated";
+  static TRIPLESTORE_UPDATED: ApplicationEvents = "triplestore_updated";
 }

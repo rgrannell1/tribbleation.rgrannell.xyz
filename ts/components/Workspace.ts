@@ -8,7 +8,9 @@ export const Workspace = {
     return m("div.workspace", [
       m("input.workspace[type=file]", {
         onchange(event: Event) {
-          broadcast(AppEvents.FILE_CHANGED, { target: event.target });
+          const input = event.target as HTMLInputElement;
+
+          broadcast(AppEvents.FILE_CHANGED, { files: input.files });
         },
       }),
     ]);

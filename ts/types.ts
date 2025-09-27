@@ -7,6 +7,20 @@ export type InputData = {
   text: string;
 };
 
+export type InputState = OkInputState | FailedInputState;
+
+export type OkInputState = {
+  state: "ok";
+  format: string;
+  data: string;
+};
+
+export type FailedInputState = {
+  state: "failed";
+  format: string;
+  error: string;
+};
+
 export type ObjectResults = {
   format: "objects";
   data: Record<string, any>[];
@@ -39,9 +53,11 @@ export type FailedCodeState = {
 export type State = {
   code: CodeState;
   settings: {
+    inputFormat: InputFormat
     outputFormat: OutputFormat;
   };
-  input?: InputData;
+  input?: InputState;
+  triples?: TriplesState;
   results?: Results;
 };
 
@@ -50,20 +66,36 @@ export type State = {
 export type ApplicationEvents =
   | "code_updated"
   | "valid_code_added"
-  | "file_changed";
+  | "file_changed"
+  | "triples_updated"
+  | "triplestore_updated";
 
-/* ~~~~~~~~~~~~~~ */
+/* ~~~~~~ Code Evaluation ~~~~~~~~ */
 
-export type OkParseResult = {
+export type EvaluateState = OkEvaluateState | FailedEvaluateState;
+
+export type OkEvaluateState = {
   state: "ok";
-  data: any[];
+  tdb: any; // TribbleDB
 };
 
-export type FailedParseResult = {
+export type FailedEvaluateState = {
   state: "failed";
   error: string;
 };
 
-export type InputParseResult =
-  | OkParseResult
-  | FailedParseResult;
+/* ~~~~~~~~~~~~~~ */
+
+export type TriplesState = OkTriplesState | FailedTriplesState;
+
+export type OkTriplesState = {
+  state: "ok";
+  format: InputFormat;
+  data: any; // TribbleDB
+};
+
+export type FailedTriplesState = {
+  state: "failed";
+  format: InputFormat;
+  error: string;
+}

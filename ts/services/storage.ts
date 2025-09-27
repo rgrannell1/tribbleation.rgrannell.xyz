@@ -19,6 +19,10 @@ export class Storage {
     localStorage.setItem(CODE_KEY, code);
   }
 
+  static setData(data: string): void {
+    localStorage.setItem(DATA_KEY, data);
+  }
+
   static getData(): string | null {
     return localStorage.getItem(DATA_KEY);
   }
@@ -29,10 +33,6 @@ export class Storage {
 
   static setInputFormat(inputFormat: InputFormat): void {
     localStorage.setItem(INPUT_FORMAT_KEY, inputFormat);
-  }
-
-  static setTribbles(tribbles: string) {
-    localStorage.setItem(DATA_KEY, tribbles);
   }
 
   static getOutputFormat(): OutputFormat | null {

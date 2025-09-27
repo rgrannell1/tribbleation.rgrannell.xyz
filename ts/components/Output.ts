@@ -1,5 +1,5 @@
 import m from "mithril";
-import { state } from "../services/state.ts";
+import { state } from "../state.ts";
 
 function ObjectsOutput() {
   const headers = State.objects.length > 0 ? Object.keys(State.objects[0]) : [];
