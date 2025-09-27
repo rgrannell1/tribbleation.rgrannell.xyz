@@ -1,7 +1,7 @@
 import { InputState, State } from "./types.ts";
 import { Storage } from "./services/storage.ts";
 import { parseCode } from "./services/parsers.ts";
-import { DEFAULT_CODE } from "./constants.ts";
+import { DEFAULT_CODE, DEFAULT_OUTPUT_FORMAT } from "./constants.ts";
 
 /*
  * Initialise application-state from storage
@@ -16,7 +16,7 @@ export function loadState(): State {
 
   const code = parseCode(Storage.getCode() ?? DEFAULT_CODE);
   const settings = {
-    outputFormat: Storage.getOutputFormat() ?? "rows",
+    outputFormat: Storage.getOutputFormat() ?? DEFAULT_OUTPUT_FORMAT,
     inputFormat: inputFormat ?? "tribbles",
   };
 
