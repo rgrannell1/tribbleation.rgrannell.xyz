@@ -23,3 +23,5 @@ export class AppEvents {
   static TRIPLESTORE_UPDATED: ApplicationEvents = "triplestore_updated";
   static OUTPUT_FORMAT_CHANGED: ApplicationEvents = "output_format_changed";
 }
+
+export const DEFAULT_OUTPUT_FORMAT = "rows";

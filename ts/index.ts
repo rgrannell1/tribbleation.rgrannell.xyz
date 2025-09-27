@@ -1,9 +1,9 @@
 import m from "mithril";
 
-import { Header } from "./components/Header.ts";
-import { attachCodeMirror, Editor } from "./components/Editor.ts";
-import { Output } from "./components/Output.ts";
-import { listen } from "./services/events.ts";
+import { header } from "./components/header.ts";
+import { attachCodeMirror, editor } from "./components/editor.ts";
+import { output } from "./components/output.ts";
+import { listen } from "./commons/events.ts";
 import {
   onCodeEdit,
   onFileChange,
@@ -13,15 +13,15 @@ import {
   onValidCodeAdded,
 } from "./actions.ts";
 import { AppEvents } from "./constants.ts";
-import { Settings } from "./components/Settings.ts";
+import { settings } from "./components/settings.ts";
 
 const App = {
   view() {
     return m("div.grid", [
-      m(Header),
-      m(Settings),
-      m(Editor),
-      m(Output),
+      m(header),
+      m(settings),
+      m(editor),
+      m(output),
     ]);
   },
 };

@@ -2,7 +2,7 @@ import m from "mithril";
 import { state } from "../config.ts";
 import { ObjectResults, TriplesResults } from "../types.ts";
 
-function ObjectsOutput(results: ObjectResults) {
+function objectsOutput(results: ObjectResults) {
   const data = results.data;
   const headers = data.length > 0 ? Object.keys(data[0]) : [];
   const rows = data.map((obj: any) =>
@@ -20,7 +20,7 @@ function ObjectsOutput(results: ObjectResults) {
   }
 }
 
-function RowsOutput(results: TriplesResults) {
+function rowsOutput(results: TriplesResults) {
   const data = results.data;
 
   return m("div.output", [
@@ -31,7 +31,7 @@ function RowsOutput(results: TriplesResults) {
   ]);
 }
 
-export const Output = {
+export const output = {
   view() {
     if (!state.results) {
       return m("div.output", [
@@ -41,9 +41,9 @@ export const Output = {
     }
 
     if (state.results.format === "rows") {
-      return RowsOutput(state.results satisfies TriplesResults);
+      return rowsOutput(state.results satisfies TriplesResults);
     } else if (state.results.format === "objects") {
-      return ObjectsOutput(state.results satisfies ObjectResults);
+      return objectsOutput(state.results satisfies ObjectResults);
     } else {
       return m("p", "unsupported output format");
     }

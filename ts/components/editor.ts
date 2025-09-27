@@ -2,10 +2,10 @@ import m from "mithril";
 import { state } from "../config.ts";
 import { basicSetup, EditorView } from "codemirror";
 import { javascript } from "@codemirror/lang-javascript";
-import { broadcast } from "../services/events.ts";
+import { broadcast } from "../commons/events.ts";
 import { AppEvents, QUERY_DOCUMENTATION } from "../constants.ts";
 
-export const ErrorDetails = {
+export const errorDetails = {
   view() {
     if (state.code.state === "ok") {
       return m("div#error-details", "no errors!");
@@ -15,12 +15,12 @@ export const ErrorDetails = {
   },
 };
 
-export const Editor = {
+export const editor = {
   view() {
     return m("div.editor-container", [
       m("h2", "Query Editor"),
       m("p", QUERY_DOCUMENTATION),
-      m(ErrorDetails),
+      m(errorDetails),
       m("div.editor", {}),
     ]);
   },

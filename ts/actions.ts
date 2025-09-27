@@ -7,10 +7,14 @@ import m from "mithril";
 import { Storage } from "./services/storage.ts";
 import { state } from "./config.ts";
 import { parseCode, parseTribbles, parseTriples } from "./services/parsers.ts";
-import { broadcast } from "./services/events.ts";
-import { readFile } from "./services/files.ts";
-import { AppEvents } from "./constants.ts";
+import { broadcast } from "./commons/events.ts";
+import { readFile } from "./commons/files.ts";
+import { AppEvents, DEFAULT_OUTPUT_FORMAT } from "./constants.ts";
 import { evaluateCode } from "./services/evaluator.ts";
+
+/*
+ * ~~~~ Event Handlers ~~~~~
+ */
 
 /*
  * Handle code-edits
@@ -30,7 +34,7 @@ export function onCodeEdit(event: Event) {
 /*
  * Handle new parsable code being added
  */
-export function onValidCodeAdded(event: Event) {
+export function onValidCodeAdded() {
   if (state.triples?.state !== "ok" || state.code.state !== "ok") {
     return;
   }
@@ -86,23 +90,7 @@ export async function onFileChange(event: Event) {
  * Run when triples are reloaded
  */
 export async function onTriplesUpdated(event: Event) {
-  if (state.triples?.state !== "ok" || state.code.state !== "ok") {
-    return;
-  }
-
-  const evalResult = evaluateCode(state.triples.data, state.code.text);
-  if (evalResult.state === "failed") {
-    state.code = {
-      state: "failed",
-      text: state.code.text,
-      error: evalResult.error,
-    };
-
-    m.redraw();
-    return;
-  }
-
-  broadcast(AppEvents.TRIPLESTORE_UPDATED, { tdb: evalResult.tdb });
+  onValidCodeAdded();
 }
 
 /*
@@ -111,7 +99,7 @@ export async function onTriplesUpdated(event: Event) {
 export function onTripleStoreUpdated(event: Event) {
   const { tdb } = (event as CustomEvent).detail satisfies { tdb: any };
 
-  const outputFormat = Storage.getOutputFormat() ?? "rows";
+  const outputFormat = Storage.getOutputFormat() ?? DEFAULT_OUTPUT_FORMAT;
   if (outputFormat === "rows") {
     state.results = {
       format: "rows",
@@ -131,21 +119,5 @@ export function onOutputFormatChanged(event: Event) {
   const { format } = (event as CustomEvent).detail satisfies { format: string };
   Storage.setOutputFormat(format);
 
-  if (state.triples?.state !== "ok" || state.code.state !== "ok") {
-    return;
-  }
-
-  const evalResult = evaluateCode(state.triples.data, state.code.text);
-  if (evalResult.state === "failed") {
-    state.code = {
-      state: "failed",
-      text: state.code.text,
-      error: evalResult.error,
-    };
-
-    m.redraw();
-    return;
-  }
-
-  broadcast(AppEvents.TRIPLESTORE_UPDATED, { tdb: evalResult.tdb });
+  onValidCodeAdded();
 }
